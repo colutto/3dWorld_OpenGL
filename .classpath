@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="hallo/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/stefan/Desktop/lwjgl/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/slick-util.jar"/>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/lzma.jar"/>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/lwjgl_util.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenGL_3dWelt/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/lwjgl-debug.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenGL_3dWelt/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/AppleJavaExtensions.jar"/>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/jinput.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenGL_3dWelt/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/asm-debug-all.jar"/>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/lwjgl_util_applet.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenGL_3dWelt/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/stefan/Documents/Java/OpenGL_3dWelt/lib/jars/lwjgl_test.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenGL_3dWelt/lib/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/stefan/Downloads/lwjgl-stable-2020-12-03-custom/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/stefan/Downloads/lwjgl-stable-2020-12-03-custom"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="out/production/hallo"/>
+</classpath>

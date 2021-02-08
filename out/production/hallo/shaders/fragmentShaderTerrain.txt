@@ -1,0 +1,93 @@
+#version 400 core
+
+in vec2 pass_textureCoords;
+in vec3 surfaceNormal;
+in vec3 toLightVector[4];
+in vec3 toCameraVector;
+in float visibility;
+in vec4 shadowCoords;
+
+out vec4 out_Colour;
+
+uniform sampler2D backgroundTexture;
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
+uniform sampler2D blendMap;
+uniform sampler2D shadowMap;
+
+uniform vec3 lightColour[4];
+uniform float reflectivity;
+uniform float shineDamper;
+uniform vec3 skyColour;
+uniform vec3 attenuation[4];
+
+const int pcfCount = 2;
+const float totaltexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
+
+
+void main(void)
+{
+    float mapSize = 4096;
+    float texelSize = 1.0 / mapSize;
+    float total = 0.0;
+
+    for(int x=-pcfCount; x<=pcfCount;x++)
+    {
+        for(int y=-pcfCount; y<=pcfCount;y++)
+        {
+            float objectNearestlight = texture(shadowMap,shadowCoords.xy + vec2(x,y) * texelSize).r;
+            if(shadowCoords.z > objectNearestlight)
+                {
+                    total += 1.0;
+                }
+        }
+    }
+    total /= totaltexels;
+
+    float lightFactor = 1.0 - (total * shadowCoords.w);
+
+
+
+    vec4 blenMapColour = texture(blendMap,pass_textureCoords);
+    float backTextureAmount = 1 - (blenMapColour.r + blenMapColour.g + blenMapColour.b);
+    vec2 tiledCoords = pass_textureCoords * 40.0;
+    vec4 backgroundTextureColour = texture(backgroundTexture,tiledCoords) * backTextureAmount;
+    vec4 rTextureColour = texture(rTexture,tiledCoords) * blenMapColour.r;
+    vec4 gTextureColour = texture(gTexture,tiledCoords) * blenMapColour.g;
+    vec4 bTextureColour = texture(bTexture,tiledCoords) * blenMapColour.b;
+
+    vec4 totalTextureColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
+
+
+    vec3 unitNormal=normalize(surfaceNormal);
+    vec3 unitVectorCamera = normalize(toCameraVector);
+
+    vec3 totalDiffuse = vec3(0.0);
+    vec3 totalSpecular = vec3(0.0);
+
+    for(int i=0;i<4;i++)
+    {
+         float distance = length(toLightVector[i]);
+         float atten = (attenuation[i].x) + (attenuation[i].y*distance) + (attenuation[i].z*distance*distance);
+
+        vec3 unittoLightVector=normalize(toLightVector[i]);
+
+        float nDot1=dot(unitNormal,unittoLightVector);
+        float brightness=max(nDot1,0.0);
+
+
+        vec3 lightDirection = -unitNormal;
+        vec3 reflectedLightDirection = reflect(lightDirection,unitNormal);
+
+        float specularFactor = dot(reflectedLightDirection, unitVectorCamera);
+        specularFactor = max(specularFactor,0.2);
+        float dampedFactor = pow(specularFactor,shineDamper);
+        totalDiffuse = totalDiffuse + (brightness * lightColour[i]) / atten;
+        totalSpecular = totalSpecular + (dampedFactor * reflectivity * lightColour[i]) / atten;
+    }
+    totalDiffuse = max(totalDiffuse * lightFactor,0.3);
+
+    vec4 colour1 = vec4(totalDiffuse,1.0) * totalTextureColour * vec4(totalSpecular,1.0);
+    out_Colour = mix(vec4(skyColour,1.0),colour1,visibility);
+}
